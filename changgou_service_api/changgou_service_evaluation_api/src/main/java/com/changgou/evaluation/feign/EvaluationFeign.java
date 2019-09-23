@@ -1,7 +1,8 @@
 package com.changgou.evaluation.feign;
 
-import com.entity.Result;
+
 import com.changgou.evaluation.pojo.Evaluation;
+import entity.Result;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 

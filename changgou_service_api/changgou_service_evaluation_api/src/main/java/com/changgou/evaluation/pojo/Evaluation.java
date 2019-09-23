@@ -1,5 +1,7 @@
 package com.changgou.evaluation.pojo;
 
+import org.springframework.data.annotation.Id;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;

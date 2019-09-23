@@ -1,9 +1,9 @@
 package com.changgou.evaluation.controller;
 
-import com.entity.Result;
-import com.entity.StatusCode;
 import com.changgou.evaluation.pojo.Evaluation;
 import com.changgou.evaluation.service.EvaluationService;
+import entity.Result;
+import entity.StatusCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
