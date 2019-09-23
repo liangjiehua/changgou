@@ -1,0 +1,42 @@
+server:
+  port: 18089
+spring:
+  application:
+    name: order
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://192.168.211.132:3306/changgou_order?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
+    username: root
+    password: 123456
+  redis:
+    host: 192.168.211.132
+    port: 6379
+  main:
+    allow-bean-definition-overriding: true
+  rabbitmq:
+    host: 192.168.211.132
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:7001/eureka
+  instance:
+    prefer-ip-address: true
+feign:
+  hystrix:
+    enabled: true
+#hystrix 配置
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            # 熔断超时设置，默认为1秒
+            timeoutInMilliseconds: 10000
+          #  隔离模式使用信号量隔离SEMAPHORE 默认值是线程隔离THREAD
+          strategy: SEMAPHORE
+#队列名
+mq:
+  pay:
+    queue:
+      order: queue.order

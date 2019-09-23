@@ -1,0 +1,35 @@
+server:
+  port: 18083
+spring:
+  application:
+    name: canal
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:7001/eureka
+  instance:
+    prefer-ip-address: true
+feign:
+  hystrix:
+    enabled: true
+#hystrix 配置
+hystrix:
+  command:
+    default:
+      execution:
+        timeout:
+          #如果enabled设置为false，则请求超时交给ribbon控制
+          enabled: true
+        isolation:
+          # Hystrix隔离策略参数，2个模式：默认值 THREAD
+          # 1.THREAD  在固定大小线程池中，以单独线程执行，并发请求数受限于线程池大小。
+          # 2. SEMAPHORE  在调用线程中执行，通过信号量(限定值)来限制并发量
+          strategy: SEMAPHORE
+#canal配置
+canal:
+  client:
+    instances:
+      example:
+        host: 192.168.211.132
+        port: 11111
+

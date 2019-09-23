@@ -1,0 +1,66 @@
+spring:
+  application:
+    name: gateway-web
+  cloud:
+    gateway:
+      #添加此全局跨域过滤器后，Controller中就不再需要@CrossOrigin注解
+      globalcors:
+        cors-configurations:
+          '[/**]': # 匹配所有请求
+            allowedOrigins: "*" #跨域处理 允许所有的域
+            allowedMethods: # 支持的方法
+              - GET
+              - POST
+              - PUT
+              - DELETE
+      routes:
+        - id: changgou_goods_route  #路由唯一标识
+          #uri: http://localhost:18081 #路由转发地址
+          uri: lb://goods  #请求发给Eureka服务中名字为goods的微服务器
+          # 路由断言：路由拦截规则
+          predicates:
+            # 拦截请求是cloud.itheima.com域名的请求
+            #- Host=cloud.itheima.com**
+            # 拦截所有以/brand开头的请求
+            #- Path=/brand/**
+            - Path=/api/album/**,/api/brand/**,/api/cache/**,/api/categoryBrand/**,/api/category/**,/api/para/**,/api/pref/**,/api/sku/**,/api/spec/**,/api/spu/**,/api/stockBack/**,/api/template/**
+          filters:
+            # 自动添加请求前缀
+            #- PrefixPath=/brand
+            - StripPrefix=1  # 去除路径前缀过滤器，一个"/"识别为一个路径
+            - name: RequestRateLimiter #请求数限流 名字不能随便写 ，使用默认的facatory
+              args:
+                # 用于通过SPEL表达式来指定使用哪一个KeyResolver，需要先在启动引导类中定义
+                key-resolver: "#{@ipKeyResolver}"
+                # 是您希望允许用户每秒执行多少请求，而不会丢弃任何请求。这是令牌桶填充的速率
+                redis-rate-limiter.replenishRate: 1
+                # 是指令牌桶的容量，允许在一秒钟内完成的最大请求数,将此值设置为零将阻止所有请求。
+                redis-rate-limiter.burstCapacity: 2
+        - id: changgou_user_route  #路由唯一标识
+          #uri: http://localhost:18081 #路由转发地址
+          uri: lb://user  #请求发给Eureka服务中名字为goods的微服务器
+          # 路由断言：路由拦截规则
+          predicates:
+            # 拦截所有以/brand开头的请求
+            - Path=/api/user/**,/api/address/**,/api/areas/**,/api/cities/**,/api/provinces/**
+          filters:
+            - StripPrefix=1  # 去除路径前缀过滤器，一个"/"识别为一个路径
+        - id: changgou_order_route  #路由唯一标识
+          #uri: http://localhost:18081 #路由转发地址
+          uri: lb://order  #请求发给Eureka服务中名字为goods的微服务器
+          # 路由断言：路由拦截规则
+          predicates:
+            # 拦截所有以/brand开头的请求
+            - Path=/api/cart/**,/api/categoryReport/**,/api/orderConfig/**,/api/order/**,/api/orderItem/**,/api/orderLog/**,/api/preferential/**,/api/returnCause/**,/api/returnOrder/**,/api/returnOrderItem/**
+          filters:
+            - StripPrefix=1  # 去除路径前缀过滤器，一个"/"识别为一个路径
+  redis:
+    host: 192.168.211.132
+server:
+  port: 8001
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:7001/eureka
+  instance:
+    prefer-ip-address: true

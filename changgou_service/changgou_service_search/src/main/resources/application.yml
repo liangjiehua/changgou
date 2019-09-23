@@ -1,0 +1,35 @@
+server:
+  port: 18085
+spring:
+  application:
+    name: search
+  data:
+    elasticsearch:
+      # Elasticsearch的集群节点名称，这里需要和Elasticsearch集群节点名称保持一致
+      cluster-name: my-application
+      # Elasticsearch节点通信地址
+      cluster-nodes: 192.168.211.132:9300
+  main:
+    allow-bean-definition-overriding: true
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:7001/eureka
+  instance:
+    prefer-ip-address: true
+feign:
+  hystrix:
+    enabled: true
+#超时配置
+ribbon:
+  # Feign请求读取数据超时时间
+  ReadTimeout: 300000
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            # 超时时间，默认1000ms
+            timeoutInMilliseconds: 100000
