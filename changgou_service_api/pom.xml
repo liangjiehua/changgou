@@ -17,6 +17,7 @@
         <module>changgou_service_user_api</module>
         <module>changgou_service_order_api</module>
         <module>changgou_service_seckill_api</module>
+        <module>changgou_service_evaluation_api</module>
     </modules>
 
 
