@@ -75,4 +75,26 @@ public interface UserService {
      */
     int addUserPoints(String username,Integer pint);
 
+    /**
+     * 修改密码
+     * @param nickname
+     * @param pw
+     * @return
+     */
+    int changepw(String nickname, String pw);
+
+    /**
+     * 根据手机号查找用户
+     * @param phone
+     * @return
+     */
+    User findByPhone(String phone);
+
+
+    /**
+     * 重置密码
+     * @param username
+     * @param pw
+     */
+    void restPw(String username, String pw);
 }

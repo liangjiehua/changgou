@@ -5,7 +5,10 @@ import com.changgou.user.pojo.User;
 import com.changgou.user.service.UserService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import entity.BCrypt;
+import entity.TokenDecode;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import tk.mybatis.mapper.entity.Example;
@@ -211,5 +214,54 @@ public class UserServiceImpl implements UserService {
     @Override
     public int addUserPoints(String username, Integer pint) {
         return userMapper.addUserPoints(username, pint);
+    }
+
+
+    /**
+     * 修改密码
+     * @param nickname
+     * @param pw
+     * @return
+     */
+    @Override
+    public int changepw(String nickname, String pw) {
+        String username = TokenDecode.getUserInfo().get("username");
+        if (nickname.equals(username)){
+            User user = new User();
+            String pwEncode = new BCryptPasswordEncoder().encode(pw);
+            user.setPassword(pwEncode);
+            user.setUsername(nickname);
+            return userMapper.updateByPrimaryKeySelective(user);
+        }else {
+            throw new RuntimeException("请输入正确的用户名！");
+        }
+    }
+
+    /**
+     * 根据手机号查找用户
+     * @param phone
+     * @return
+     */
+    @Override
+    public User findByPhone(String phone) {
+        User user = new User();
+        user.setPhone(phone);
+        List<User> users = userMapper.select(user);
+        if (users != null) {
+            user = users.get(0);
+        }
+        return user;
+    }
+
+    /**
+     * 密码重置
+     * @param username
+     * @param pw
+     */
+    @Override
+    public void restPw(String username, String pw) {
+        User user = userMapper.selectByPrimaryKey(username);
+        user.setPassword(new BCryptPasswordEncoder().encode(pw));
+        userMapper.updateByPrimaryKeySelective(user);
     }
 }

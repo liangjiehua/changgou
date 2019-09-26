@@ -37,6 +37,12 @@
             <groupId>com.github.wxpay</groupId>
             <artifactId>wxpay-sdk</artifactId>
             <version>0.0.3</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-simple</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <!--httpclient支持-->
         <dependency>
@@ -50,6 +56,7 @@
             <artifactId>spring-cloud-starter-oauth2</artifactId>
             <scope>provided</scope>
         </dependency>
+
         <!--鉴权-->
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
@@ -58,6 +65,17 @@
             <scope>provided</scope>
         </dependency>
 
+        <!--阿里云短信-->
+        <dependency>
+            <groupId>com.aliyun</groupId>
+            <artifactId>aliyun-java-sdk-core</artifactId>
+            <version>3.3.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.aliyun</groupId>
+            <artifactId>aliyun-java-sdk-dysmsapi</artifactId>
+            <version>1.0.0</version>
+        </dependency>
     </dependencies>
 
 </project>

@@ -14,6 +14,17 @@ spring:
               - PUT
               - DELETE
       routes:
+        #静态资源放行
+        - id: changgou_static_route
+          uri: http://localhost:9001
+          predicates:
+            - Path=/css/**,/data/**,/fonts/**,/img/**,/js/**
+        - id: changgou_userSafe_route
+          uri: lb://safe
+          predicates:
+            - Path=/api/userSafe/**
+          filters:
+            - StripPrefix=1
         - id: changgou_goods_route  #路由唯一标识
           #uri: http://localhost:18081 #路由转发地址
           uri: lb://goods  #请求发给Eureka服务中名字为goods的微服务器
@@ -61,6 +72,6 @@ server:
 eureka:
   client:
     service-url:
-      defaultZone: http://127.0.0.1:7001/eureka
+      defaultZone: http://127.0.0.1:7001/eureka/
   instance:
     prefer-ip-address: true

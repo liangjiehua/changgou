@@ -10,6 +10,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.List;
@@ -29,6 +30,42 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    /**
+     * 重置密码
+     * @param username
+     * @param pw
+     * @return
+     */
+    @RequestMapping("/restPw/{username}/{pw}")
+    Result changePw(@PathVariable("username") String username,@PathVariable("pw") String pw){
+        userService.restPw(username,pw);
+        return new Result(true,StatusCode.OK,"密码重置成功");
+    }
+
+    /**
+     * 根据手机号查找用户
+     * @param phone
+     * @return
+     */
+    @GetMapping("/changepw/{phone}")
+    Result<User> findByPhone(@PathVariable("phone") String phone){
+        User user = userService.findByPhone(phone);
+       return new Result<User>(true,StatusCode.OK,"查询用户成功",user) ;
+    }
+
+    /**
+     * 修改密码
+     * @param nickname
+     * @param pw
+     * @return
+     */
+    @GetMapping("/changepw/{nickname}/{pw}")
+    Result changePassword(@PathVariable("nickname") String nickname,
+                          @PathVariable("pw") String pw){
+        int count = userService.changepw(nickname,pw);
+        return new Result(true ,StatusCode.OK,"密码修改成功",count);
+    }
 
     @RequestMapping("login")
     public Result<User> login(String username, String password, HttpServletResponse response){

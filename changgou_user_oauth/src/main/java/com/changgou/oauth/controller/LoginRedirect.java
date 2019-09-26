@@ -20,4 +20,10 @@ public class LoginRedirect {
         model.addAttribute("from", from);
         return "login";
     }
+
+    @RequestMapping("tologin")
+    public String tologin(){
+        return "login";
+    }
+
 }

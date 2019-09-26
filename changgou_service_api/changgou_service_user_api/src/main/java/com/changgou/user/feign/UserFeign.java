@@ -23,4 +23,33 @@ public interface UserFeign {
 
     @GetMapping(value = "/points/add")
     public Result addPoints(@RequestParam(value = "points") Integer points);
+
+    /**
+     * 修改密码
+     * @param nickname
+     * @param pw
+     * @param
+     * @return
+     */
+    @GetMapping("/changepw/{nickname}/{pw}")
+    Result changePassword(@PathVariable("nickname") String nickname,@PathVariable("pw") String pw);
+
+
+    /**
+     * 根据手机号查找用户
+     * @param phone
+     * @return
+     */
+    @GetMapping("/changepw/{phone}")
+    Result<User> findByPhone(@PathVariable("phone") String phone);
+
+
+    /**
+     * 重置密码
+     * @param username
+     * @param pw
+     * @return
+     */
+    @RequestMapping("/restPw/{username}/{pw}")
+    Result changePw(@PathVariable("username") String username,@PathVariable("pw") String pw);
 }

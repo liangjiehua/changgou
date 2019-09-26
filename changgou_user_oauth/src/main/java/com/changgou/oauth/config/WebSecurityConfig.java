@@ -33,7 +33,9 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 "/js/**",
                 "/login.html",
                 "/oauth/login",
-                "/user/logout");
+                "/user/logout",
+                "/register.html",
+                "/oauth/register");
     }
 
     /***

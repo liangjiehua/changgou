@@ -36,7 +36,7 @@
 							<li class="f-item"><span>关注青橙</span></li>
 							<li class="f-item"><span><a href="cooperation.html" target="_blank">合作招商</a></span></li>
 							<li class="f-item"><span><a href="shoplogin.html" target="_blank">商家后台</a></span></li>				
-							<li class="f-item"><span>网站导航</li>
+							<li class="f-item"><span>网站导航</span></li>
 						</ul>
 					</div>
 					
@@ -106,7 +106,7 @@
 										<input name="m1" type="checkbox" value="2" checked="">
 										自动登录
 									</label>
-									<span class="forget">忘记密码？</span>
+									<a class="forget" href="javascript:void(0)" @click="toFindPw()">忘记密码？</a>
 								</div>
 								<div style="text-align: center;color: red;">{{msg}}</div>
 								<div class="logined">
@@ -189,6 +189,9 @@
 						app.msg = response.data.message;
 					}
 				})
+			},
+			toFindPw:function () {
+				window.location.href = "http://localhost:18060/userSafe/rest";
 			}
 		}
 	});
