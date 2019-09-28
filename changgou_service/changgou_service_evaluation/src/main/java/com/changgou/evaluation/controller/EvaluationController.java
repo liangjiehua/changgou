@@ -18,8 +18,6 @@ public class EvaluationController {
 
     @PostMapping("/add")
     public Result add(@RequestBody Evaluation evaluation){
-        String username = TokenDecode.getUserInfo().get("username");
-        evaluation.setUsername(username);
         evaluation.setReceiptTime(new Date());
         evaluation.setEvaluationTime(new Date());
         evaluation.setStatus("1");

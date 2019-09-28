@@ -18,7 +18,9 @@ public class EvaluationServiceImpl implements EvaluationService {
 
     @Override
     public Evaluation findBySkuId(Long skuId) {
-        Evaluation evaluation = evaluationMapper.findBySkuId(skuId);
+        Evaluation evaluation1 = new Evaluation();
+        evaluation1.setSkuId(skuId);
+        Evaluation evaluation = evaluationMapper.selectOne(evaluation1);
         return evaluation;
     }
 }

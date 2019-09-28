@@ -7,6 +7,4 @@ import tk.mybatis.mapper.common.Mapper;
 
 public interface EvaluationMapper extends Mapper<Evaluation> {
 
-    @Select("select * from tb_evaluation where sku_id = #{skuId}")
-    Evaluation findBySkuId(@Param("skuId") Long skuId);
 }
